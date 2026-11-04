@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Find Catdom Color Hole board walkthroughs by browsing visual board screenshots.">
+  <title>Catdom Board Finder</title>
+  <style>
+    :root{--bg:#100f1d;--panel:#1b1a2b;--panel2:#242238;--text:#f8f5ff;--muted:#b9b4cb;--pink:#ff75bd;--cyan:#62e5ee;--line:#39354f}
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(ellipse at 15% 0%,#342044 0,transparent 38%),var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+    .wrap{max-width:1120px;margin:auto;padding:28px 20px 64px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:46px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:-.04em;font-size:1.18rem}
+    .mark{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--pink),#9c7cff);font-size:24px;box-shadow:0 8px 28px #ff75bd33}
+    .tag{border:1px solid var(--line);border-radius:999px;padding:7px 12px;color:var(--muted);font-size:.8rem}
+    .hero{max-width:760px;margin:0 auto 32px;text-align:center}
+    .eyebrow{color:var(--cyan);font-weight:800;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem}
+    h1{font-size:clamp(2.3rem,7vw,4.6rem);line-height:1.02;letter-spacing:-.065em;margin:14px 0}
+    h1 span{background:linear-gradient(90deg,var(--pink),var(--cyan));color:transparent;background-clip:text}
+    .hero p{color:var(--muted);font-size:1.05rem;margin:0 auto 24px;max-width:610px}
+    .search{display:flex;gap:10px;max-width:570px;margin:auto}
+    input{min-width:0;flex:1;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 17px;color:var(--text);font:inherit;outline:none}
+    input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #62e5ee20}
+    button,.watch{border:0;border-radius:14px;background:linear-gradient(110deg,#ff75bd,#a987ff);color:#21142b;font-weight:850;padding:0 20px;font:inherit;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+    .stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:25px 0 36px}
+    .stat{background:#ffffff09;border:1px solid var(--line);border-radius:12px;padding:9px 14px;color:var(--muted);font-size:.88rem}
+    .stat strong{color:var(--text)}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:0 0 16px}
+    h2{font-size:1.35rem;letter-spacing:-.03em;margin:0}
+    .hint{color:var(--muted);font-size:.85rem}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+    .card{overflow:hidden;background:linear-gradient(180deg,#242238,#191827);border:1px solid var(--line);border-radius:18px;transition:transform .18s,border-color .18s}
+    .card:hover{transform:translateY(-4px);border-color:#8c78c4}
+    .thumb{height:260px;background:#302b42;display:flex;align-items:center;justify-content:center;padding:8px}
+    .thumb img{height:100%;width:100%;object-fit:contain}
+    .info{padding:14px}
+    .meta{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+    .level{font-size:1.08rem;font-weight:850}
+    .id{font-size:.72rem;color:var(--cyan);background:#62e5ee12;border:1px solid #62e5ee30;border-radius:999px;padding:4px 7px}
+    .watch{width:100%;min-height:42px;margin-top:12px;font-weight:800;font-size:.9rem}
+    .empty{display:none;text-align:center;color:var(--muted);padding:38px;border:1px dashed var(--line);border-radius:16px}
+    .note{margin-top:28px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;color:var(--muted);font-size:.9rem;background:#ffffff06}
+    footer{text-align:center;color:#8e89a4;font-size:.8rem;margin-top:42px}
+    @media(max-width:520px){.wrap{padding:18px 14px 42px}header{margin-bottom:34px}.tag{display:none}.search{flex-direction:column}.search button{min-height:48px}.thumb{height:230px}.section-head{align-items:start;flex-direction:column}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="brand"><div class="mark">🐱</div><span>CATDOM BOARD FINDER</span></div>
+      <div class="tag">A Game Level Solutions project</div>
+    </header>
+    <section class="hero">
+      <div class="eyebrow">Find the board. Find the solution.</div>
+      <h1>Your next <span>Catdom</span><br>walkthrough starts here.</h1>
+      <p>Browse the board screenshots and jump straight to the matching walkthrough. Search by level number or board ID.</p>
+      <div class="search">
+        <input id="search" type="search" placeholder="Try level 1282 or CBF-0001" aria-label="Search by level or board ID">
+        <button id="clear" type="button">Clear search</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong id="count">10</strong> boards in catalog</div>
+        <div class="stat"><strong>1282–1293</strong> level range</div>
+        <div class="stat"><strong>10</strong> walkthroughs</div>
+      </div>
+    </section>
+    <section>
+      <div class="section-head"><h2>Board catalog</h2><div class="hint">Select a card to watch its walkthrough.</div></div>
+      <div id="grid" class="grid"></div>
+      <div id="empty" class="empty">No matching board found. Try another level or board ID.</div>
+    </section>
+    <div class="note"><strong>Coming next:</strong> visual screenshot matching. This first release is a searchable catalog; automatic image recognition is not enabled yet.</div>
+    <footer>Made for Catdom Color Hole players · Game Level Solutions</footer>
+  </main>
+  <script>
+    const search = document.getElementById('search');
+    const grid = document.getElementById('grid');
+    const empty = document.getElementById('empty');
+    let boards = [];
+    function render(){
+      const q = search.value.trim().toLowerCase();
+      const filtered = boards.filter(b => String(b.level).includes(q) || b.id.toLowerCase().includes(q));
+      grid.innerHTML = filtered.map(b => `
+        <article class="card">
+          <div class="thumb"><img src="${b.image}" alt="Catdom Color Hole board for level ${b.level}" loading="lazy"></div>
+          <div class="info">
+            <div class="meta"><span class="level">Level ${b.level}</span><span class="id">${b.id}</span></div>
+            <a class="watch" href="${b.walkthrough}" target="_blank" rel="noopener noreferrer">▶ Watch walkthrough</a>
+          </div>
+        </article>`).join('');
+      empty.style.display = filtered.length ? 'none' : 'block';
+      document.getElementById('count').textContent = filtered.length;
+    }
+    fetch('./data.json').then(r => r.json()).then(data => {boards=data;render();})
+      .catch(() => {grid.innerHTML='<p>Could not load the board catalog. Please refresh the page.</p>';});
+    search.addEventListener('input',render);
+    document.getElementById('clear').addEventListener('click',()=>{search.value='';render();search.focus();});
+  </script>
+</body>
+</html>
