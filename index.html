@@ -1,139 +1,192 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Find your Catdom Color Hole board and walkthrough. Encuentra tu tablero y su solución.">
 <title>Catdom Board Finder</title>
 <style>
 :root{--bg:#100f1d;--panel:#1b1a2b;--panel2:#242238;--text:#f8f5ff;--muted:#b9b4cb;--pink:#ff75bd;--cyan:#62e5ee;--line:#39354f;--green:#62e6b2}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#342044 0,transparent 38%),var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}.wrap{max-width:900px;margin:auto;padding:25px 18px 60px}header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:54px}.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:-.04em}.mark{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--pink),#9c7cff);font-size:24px}.lang-switch{display:flex;gap:6px}.lang-btn{border:1px solid var(--line);background:#ffffff0b;color:var(--muted);border-radius:999px;padding:7px 11px;font:700 .78rem system-ui;cursor:pointer}.lang-btn.active{background:linear-gradient(110deg,var(--pink),#a987ff);color:#21142b;border-color:transparent}.tag{border:1px solid var(--line);border-radius:999px;padding:7px 12px;color:var(--muted);font-size:.78rem}.hero{text-align:center;max-width:700px;margin:0 auto 28px}.eyebrow{color:var(--cyan);font-weight:800;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem}h1{font-size:clamp(2.3rem,7vw,4.3rem);line-height:1.03;letter-spacing:-.065em;margin:13px 0}h1 span{background:linear-gradient(90deg,var(--pink),var(--cyan));color:transparent;background-clip:text}.hero p{color:var(--muted);font-size:1.04rem;max-width:590px;margin:0 auto}.upload{max-width:650px;margin:30px auto 0;border:2px dashed #65577f;border-radius:22px;background:#ffffff07;padding:26px 20px;text-align:center;transition:.2s}.upload.drag{border-color:var(--cyan);background:#62e5ee12}.upload-icon{font-size:2.4rem;margin-bottom:5px}.upload strong{display:block;font-size:1.12rem}.upload p{color:var(--muted);font-size:.9rem;margin:5px 0 17px}.button{border:0;border-radius:13px;background:linear-gradient(110deg,var(--pink),#a987ff);color:#21142b;font-weight:850;padding:12px 20px;font:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}.button:disabled{opacity:.55;cursor:wait}input[type=file]{display:none}.privacy{font-size:.75rem;color:#9690aa;margin-top:12px}.preview-wrap{display:none;max-width:650px;margin:18px auto 0;grid-template-columns:110px 1fr;gap:16px;align-items:center;background:var(--panel);border:1px solid var(--line);padding:12px;border-radius:16px}.preview-wrap img{width:110px;height:125px;object-fit:contain;background:#302b42;border-radius:10px}.preview-wrap .filename{font-weight:750;overflow-wrap:anywhere}.preview-wrap .sub{font-size:.82rem;color:var(--muted)}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}.secondary{background:#ffffff12;color:var(--text);border:1px solid var(--line)}.status{display:none;max-width:650px;margin:18px auto;padding:15px 17px;border-radius:14px;background:#ffffff08;border:1px solid var(--line);color:var(--muted)}.status strong{color:var(--text)}.results{max-width:650px;margin:24px auto 0;display:none}.results h2{font-size:1.25rem;margin:0 0 12px}.match{display:grid;grid-template-columns:125px 1fr;gap:16px;padding:13px;background:linear-gradient(180deg,#242238,#191827);border:1px solid var(--line);border-radius:17px;margin-bottom:12px;align-items:center}.match img{width:125px;height:155px;object-fit:contain;background:#302b42;border-radius:10px}.match .level{font-size:1.13rem;font-weight:900}.match .id{font-size:.76rem;color:var(--cyan);margin-left:7px}.match .score{color:var(--muted);font-size:.82rem;margin:5px 0 12px}.watch{min-height:40px;padding:8px 13px;text-decoration:none;border-radius:11px;background:linear-gradient(110deg,var(--pink),#a987ff);color:#21142b;font-weight:850;font-size:.9rem;display:inline-flex;align-items:center}.note{max-width:650px;margin:28px auto 0;padding:14px 16px;border:1px solid var(--line);border-radius:14px;color:var(--muted);font-size:.86rem;background:#ffffff06}.note strong{color:var(--text)}footer{text-align:center;color:#8e89a4;font-size:.78rem;margin-top:40px}.hidden-canvas{display:none}@media(max-width:520px){.wrap{padding:18px 14px 42px}header{margin-bottom:36px}.tag{display:none}.upload{padding:22px 14px}.match{grid-template-columns:95px 1fr;gap:11px}.match img{width:95px;height:130px}.preview-wrap{grid-template-columns:85px 1fr}.preview-wrap img{width:85px;height:110px}}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#342044 0,transparent 38%),var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}.wrap{max-width:900px;margin:auto;padding:25px 18px 60px}header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:54px}.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:-.04em}.mark{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--pink),#9c7cff);font-size:24px}.tag{border:1px solid var(--line);border-radius:999px;padding:7px 12px;color:var(--muted);font-size:.78rem}.hero{text-align:center;max-width:700px;margin:0 auto 28px}.eyebrow{color:var(--cyan);font-weight:800;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem}h1{font-size:clamp(2.3rem,7vw,4.3rem);line-height:1.03;letter-spacing:-.065em;margin:13px 0}h1 span{background:linear-gradient(90deg,var(--pink),var(--cyan));color:transparent;background-clip:text}.hero p{color:var(--muted);font-size:1.04rem;max-width:590px;margin:0 auto}.upload{max-width:650px;margin:30px auto 0;border:2px dashed #65577f;border-radius:22px;background:#ffffff07;padding:26px 20px;text-align:center;transition:.2s}.upload.drag{border-color:var(--cyan);background:#62e5ee12}.upload-icon{font-size:2.4rem;margin-bottom:5px}.upload strong{display:block;font-size:1.12rem}.upload p{color:var(--muted);font-size:.9rem;margin:5px 0 17px}.button{border:0;border-radius:13px;background:linear-gradient(110deg,var(--pink),#a987ff);color:#21142b;font-weight:850;padding:12px 20px;font:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}.button:disabled{opacity:.55;cursor:wait}input[type=file]{display:none}.privacy{font-size:.75rem;color:#9690aa;margin-top:12px}.preview-wrap{display:none;max-width:650px;margin:18px auto 0;grid-template-columns:110px 1fr;gap:16px;align-items:center;background:var(--panel);border:1px solid var(--line);padding:12px;border-radius:16px}.preview-wrap img{width:110px;height:125px;object-fit:contain;background:#302b42;border-radius:10px}.preview-wrap .filename{font-weight:750;overflow-wrap:anywhere}.preview-wrap .sub{font-size:.82rem;color:var(--muted)}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}.secondary{background:#ffffff12;color:var(--text);border:1px solid var(--line)}.status{display:none;max-width:650px;margin:18px auto;padding:15px 17px;border-radius:14px;background:#ffffff08;border:1px solid var(--line);color:var(--muted)}.status strong{color:var(--text)}.results{max-width:650px;margin:24px auto 0;display:none}.results h2{font-size:1.25rem;margin:0 0 12px}.match{display:grid;grid-template-columns:125px 1fr;gap:16px;padding:13px;background:linear-gradient(180deg,#242238,#191827);border:1px solid var(--line);border-radius:17px;margin-bottom:12px;align-items:center}.match img{width:125px;height:155px;object-fit:contain;background:#302b42;border-radius:10px}.match .level{font-size:1.13rem;font-weight:900}.match .id{font-size:.76rem;color:var(--cyan);margin-left:7px}.match .score{color:var(--muted);font-size:.82rem;margin:5px 0 12px}.watch{min-height:40px;padding:8px 13px;text-decoration:none;border-radius:11px;background:linear-gradient(110deg,var(--pink),#a987ff);color:#21142b;font-weight:850;font-size:.9rem;display:inline-flex;align-items:center}.note{max-width:650px;margin:28px auto 0;padding:14px 16px;border:1px solid var(--line);border-radius:14px;color:var(--muted);font-size:.86rem;background:#ffffff06}.note strong{color:var(--text)}footer{text-align:center;color:#8e89a4;font-size:.78rem;margin-top:40px}.hidden-canvas{display:none}@media(max-width:520px){.head-right{gap:5px}.lang-btn{padding:6px 9px}.brand{font-size:.9rem}.wrap{padding:18px 14px 42px}header{margin-bottom:36px}.tag{display:none}.upload{padding:22px 14px}.match{grid-template-columns:95px 1fr;gap:11px}.match img{width:95px;height:130px}.preview-wrap{grid-template-columns:85px 1fr}.preview-wrap img{width:85px;height:110px}}
+
+.head-right{display:flex;align-items:center;gap:10px}.lang-switch{display:flex;gap:5px}.lang-btn{border:1px solid var(--line);background:#ffffff0b;color:var(--muted);border-radius:999px;padding:7px 11px;font-weight:800;cursor:pointer}.lang-btn.active{background:linear-gradient(110deg,var(--pink),#a987ff);color:#21142b;border-color:transparent}
 </style>
 </head>
 <body><main class="wrap">
-<header><div class="brand"><div class="mark">🐱</div><span>CATDOM BOARD FINDER</span></div><div style="display:flex;align-items:center;gap:10px"><div class="tag">Game Level Solutions</div><div class="lang-switch" aria-label="Language"><button type="button" class="lang-btn" id="lang-es">ES</button><button type="button" class="lang-btn" id="lang-en">EN</button></div></div></header>
-<section class="hero"><div class="eyebrow" data-i18n="eyebrow">Tu tablero. Nuestra búsqueda.</div><h1 data-i18n="headline">Encuentra tu <span>Catdom</span><br>solución.</h1><p data-i18n="intro">Sube una captura de pantalla tal como la tomaste, o una imagen del tablero recortado. Detectaremos el área de juego y la compararemos con los tableros registrados.</p></section>
+<header><div class="brand"><div class="mark">🐱</div><span>CATDOM BOARD FINDER</span></div><div class="head-right"><div class="tag">Game Level Solutions</div><div class="lang-switch" aria-label="Language"><button id="lang-es" class="lang-btn" type="button">ES</button><button id="lang-en" class="lang-btn" type="button">EN</button></div></div></header>
+<section class="hero"><div class="eyebrow" data-i18n="eyebrow">Tu tablero. Nuestra búsqueda.</div><h1 data-i18n="headline">Encuentra tu <span>Catdom</span><br>solución.</h1><p data-i18n="intro">Sube una captura tal como la tomaste, o una imagen del tablero recortado. Detectaremos el área de juego y la compararemos con los tableros registrados.</p></section>
 <section id="dropzone" class="upload" aria-label="Área para subir captura" data-i18n-aria="uploadAria"><div class="upload-icon">📸</div><strong data-i18n="uploadTitle">Sube una captura de tu pantalla</strong><p data-i18n="uploadHelp">O selecciónala desde tu dispositivo. No necesitas recortar ni editar la imagen; solo procura que se vea el tablero completo.</p><label class="button" for="file" data-i18n="chooseImage">Elegir imagen</label><input id="file" type="file" accept="image/*"><div class="privacy" data-i18n="privacy">La imagen se analiza en tu navegador; no se envía a un servidor.</div></section>
 <section id="preview" class="preview-wrap"><img id="previewImage" alt="Vista previa de tu captura"><div><div class="filename" id="fileName"></div><div class="sub" data-i18n="ready">Captura lista para comparar.</div><div class="actions"><button id="find" class="button" data-i18n="find">Buscar mi tablero</button><button id="change" class="button secondary" data-i18n="change">Cambiar imagen</button></div></div></section>
 <div id="status" class="status" role="status" aria-live="polite"></div>
-<section id="results" class="results"><h2 id="resultTitle" data-i18n="closest">Tableros más parecidos</h2><div id="matches"></div></section>
-<div class="note"><strong data-i18n="testVersion">Versión de prueba:</strong> <span data-i18n="note">el buscador extrae el área de juego de capturas verticales de teléfono o utiliza directamente imágenes del tablero recortado. Si el tablero no está en nuestra colección, todavía no podrá encontrar su walkthrough. Estamos afinando la precisión con capturas reales.</span></div>
+<section id="results" class="results"><h2 id="resultTitle">Tableros más parecidos</h2><div id="matches"></div></section>
+<div class="note"><strong data-i18n="testVersion">Versión de prueba:</strong> <span data-i18n="note">El buscador detecta el área de juego en capturas verticales o utiliza imágenes del tablero recortado. No necesitas editar tu captura.</span></div>
 <footer data-i18n="footer">Hecho para jugadores de Catdom Color Hole · Game Level Solutions</footer>
 </main>
 <script>
-const $=id=>document.getElementById(id);let selectedFile=null,boards=[];
+const $=id=>document.getElementById(id);
+let selectedFile=null,boards=[],currentLang=(navigator.language||'en').toLowerCase().startsWith('es')?'es':'en';
 const fileInput=$('file'),drop=$('dropzone'),preview=$('preview'),status=$('status'),results=$('results');
 
-const translations={
-  es:{
-    eyebrow:'Tu tablero. Nuestra búsqueda.',
-    headline:'Encuentra tu <span>Catdom</span><br>solución.',
-    intro:'Sube una captura de pantalla tal como la tomaste, o una imagen del tablero recortado. Detectaremos el área de juego y la compararemos con los tableros registrados.',
-    uploadAria:'Área para subir captura',
-    uploadTitle:'Sube una captura de tu pantalla',
-    uploadHelp:'O selecciónala desde tu dispositivo. No necesitas recortar ni editar la imagen; solo procura que se vea el tablero completo.',
-    chooseImage:'Elegir imagen', privacy:'La imagen se analiza en tu navegador; no se envía a un servidor.',
-    ready:'Captura lista para comparar.', find:'Buscar mi tablero', change:'Cambiar imagen',
-    closest:'Tableros más parecidos', testVersion:'Versión de prueba:',
-    note:'el buscador extrae el área de juego de capturas verticales de teléfono o utiliza directamente imágenes del tablero recortado. Si el tablero no está en nuestra colección, todavía no podrá encontrar su walkthrough. Estamos afinando la precisión con capturas reales.',
-    footer:'Hecho para jugadores de Catdom Color Hole · Game Level Solutions',
-    invalid:'Ese archivo no parece ser una imagen. Elige una captura PNG, JPG o WEBP.',
-    analyzing:'Analizando…', comparing:'Estamos comparando tu captura con los tableros registrados…',
-    possible:'¡Encontramos un posible tablero!', noMatch:'No encontramos una coincidencia segura',
-    noMatchText:'Estos son los tableros visualmente más parecidos. Ninguno alcanzó el umbral de coincidencia; puede que tu tablero aún no esté registrado.',
-    alt:'También hay otra coincidencia cercana; revisa que la primera imagen corresponda a tu tablero.',
-    estimated:'Similitud estimada: ', confidence:'Coincidencia estimada: ', watch:'▶ Ver walkthrough',
-    error:'No pudimos analizar esa imagen. Intenta con una captura PNG o JPG más clara.',
-    loadError:'No pudimos cargar la base de tableros. Recarga la página más tarde.',
-    level:'Level'
-  },
-  en:{
-    eyebrow:'Your board. Our search.',
-    headline:'Find your <span>Catdom</span><br>walkthrough.',
-    intro:'Upload a screenshot just as you captured it, or a cropped image of the board. We will detect the play area and compare it with the boards in our collection.',
-    uploadAria:'Screenshot upload area',
-    uploadTitle:'Upload a screenshot of your screen',
-    uploadHelp:'Or choose an image from your device. No need to crop or edit it; just make sure the entire board is visible.',
-    chooseImage:'Choose image', privacy:'Your image is analyzed in your browser; it is not sent to a server.',
-    ready:'Screenshot ready to compare.', find:'Find my board', change:'Change image',
-    closest:'Closest matching boards', testVersion:'Test version:',
-    note:'The finder extracts the play area from vertical phone screenshots or uses cropped board images directly. If your board is not in our collection, it cannot find its walkthrough yet. We are improving accuracy with real screenshots.',
-    footer:'Made for Catdom Color Hole players · Game Level Solutions',
-    invalid:'This file does not appear to be an image. Choose a PNG, JPG, or WEBP screenshot.',
-    analyzing:'Analyzing…', comparing:'Comparing your screenshot with the registered boards…',
-    possible:'We found a possible board!', noMatch:'No confident match found',
-    noMatchText:'These are the visually closest boards. None reached the matching threshold; your board may not be in our collection yet.',
-    alt:'There is another close match; check that the first image corresponds to your board.',
-    estimated:'Estimated similarity: ', confidence:'Estimated match: ', watch:'▶ View walkthrough',
-    error:'We could not analyze that image. Try a clearer PNG or JPG screenshot.',
-    loadError:'We could not load the board collection. Please reload the page later.',
-    level:'Level'
-  }
-};
-let currentLang=(navigator.language||'').toLowerCase().startsWith('es')?'es':'en';
-function tr(key){return translations[currentLang][key]||translations.en[key]||key}
-function applyLanguage(lang){
-  currentLang=lang;
-  document.documentElement.lang=lang;
-  document.querySelectorAll('[data-i18n]').forEach(el=>{el.innerHTML=tr(el.dataset.i18n)});
-  document.querySelectorAll('[data-i18n-aria]').forEach(el=>{el.setAttribute('aria-label',tr(el.dataset.i18nAria))});
-  $('lang-es').classList.toggle('active',lang==='es');
-  $('lang-en').classList.toggle('active',lang==='en');
-  $('lang-es').setAttribute('aria-pressed',lang==='es');
-  $('lang-en').setAttribute('aria-pressed',lang==='en');
-  $('find').textContent=tr('find');
-  if(status.style.display==='block' && status.dataset.messageKey){status.innerHTML=status.dataset.messageKey;}
-  if(results.style.display==='block') renderVisibleTranslations();
+const T={
+es:{
+ eyebrow:'Tu tablero. Nuestra búsqueda.',headline:'Encuentra tu <span>Catdom</span><br>solución.',
+ intro:'Sube una captura tal como la tomaste, o una imagen del tablero recortado. Detectaremos el área de juego y la compararemos con los tableros registrados.',
+ uploadAria:'Área para subir captura',uploadTitle:'Sube una captura de tu pantalla',
+ uploadHelp:'O selecciónala desde tu dispositivo. No necesitas recortar ni editar la imagen; solo procura que se vea el tablero completo.',
+ chooseImage:'Elegir imagen',privacy:'La imagen se analiza en tu navegador; no se envía a un servidor.',
+ ready:'Captura lista para comparar.',find:'Buscar mi tablero',change:'Cambiar imagen',
+ testVersion:'Versión de prueba:',note:'El buscador prueba distintas posiciones y tamaños para localizar el tablero en capturas completas, o utiliza directamente imágenes recortadas. No necesitas editar tu captura.',
+ footer:'Hecho para jugadores de Catdom Color Hole · Game Level Solutions',
+ invalid:'Ese archivo no parece ser una imagen. Elige una captura PNG, JPG o WEBP.',
+ analyzing:'Analizando…',comparing:'Buscando el tablero dentro de tu captura y comparándolo con la colección…',
+ possible:'¡Encontramos un posible tablero!',none:'No encontramos una coincidencia segura',
+ noneText:'Estos son los tableros visualmente más parecidos. Ninguno alcanzó el umbral de coincidencia; puede que tu tablero aún no esté registrado.',
+ close:'También hay otra coincidencia cercana. Revisa que el primer resultado sea tu tablero.',
+ level:'Nivel',estimated:'Similitud estimada: ',match:'Coincidencia estimada: ',watch:'▶ Ver walkthrough',
+ error:'No pudimos analizar esa imagen. Intenta con una captura PNG o JPG más clara.',
+ loadError:'No pudimos cargar la base de tableros. Recarga la página más tarde.'
+},
+en:{
+ eyebrow:'Your board. Our search.',headline:'Find your <span>Catdom</span><br>walkthrough.',
+ intro:'Upload a screenshot just as you captured it, or a cropped image of the board. We will locate the play area and compare it with the boards in our collection.',
+ uploadAria:'Screenshot upload area',uploadTitle:'Upload a screenshot of your screen',
+ uploadHelp:'Choose an image from your device. No need to crop or edit it; just make sure the whole board is visible.',
+ chooseImage:'Choose image',privacy:'Your image is analyzed in your browser; it is not sent to a server.',
+ ready:'Screenshot ready to compare.',find:'Find my board',change:'Change image',
+ testVersion:'Test version:',note:'The finder tests multiple positions and sizes to locate the board in full screenshots, or uses cropped board images directly. You do not need to edit your screenshot.',
+ footer:'Made for Catdom Color Hole players · Game Level Solutions',
+ invalid:'This file does not appear to be an image. Choose a PNG, JPG, or WEBP screenshot.',
+ analyzing:'Analyzing…',comparing:'Locating the board in your screenshot and comparing it with the collection…',
+ possible:'We found a possible board!',none:'No confident match found',
+ noneText:'These are the visually closest boards. None reached the matching threshold; your board may not be in our collection yet.',
+ close:'There is another close match. Check that the first result is your board.',
+ level:'Level',estimated:'Estimated similarity: ',match:'Estimated match: ',watch:'▶ View walkthrough',
+ error:'We could not analyze that image. Try a clearer PNG or JPG screenshot.',
+ loadError:'We could not load the board collection. Please reload the page.'
+}};
+const tr=k=>T[currentLang][k]||T.en[k]||k;
+function setLanguage(lang){
+ currentLang=lang;document.documentElement.lang=lang;
+ document.querySelectorAll('[data-i18n]').forEach(el=>el.innerHTML=tr(el.dataset.i18n));
+ document.querySelectorAll('[data-i18n-aria]').forEach(el=>el.setAttribute('aria-label',tr(el.dataset.i18nAria)));
+ $('lang-es').classList.toggle('active',lang==='es');$('lang-en').classList.toggle('active',lang==='en');
+ $('lang-es').setAttribute('aria-pressed',lang==='es');$('lang-en').setAttribute('aria-pressed',lang==='en');
+ if(status.dataset.key) status.innerHTML=tr(status.dataset.key);
+ if(results.style.display==='block') translateResults();
 }
-function renderVisibleTranslations(){
-  const title=$('resultTitle');
-  if(title.dataset.state==='possible')title.textContent=tr('possible');
-  else if(title.dataset.state==='none')title.textContent=tr('noMatch');
-  else title.textContent=tr('closest');
-  document.querySelectorAll('.match .level').forEach(el=>{el.textContent=tr('level')+' '+el.dataset.number});
-  document.querySelectorAll('.match .score').forEach(el=>{const uncertain=el.dataset.uncertain==='1';el.textContent=(uncertain?tr('estimated'):tr('confidence'))+el.dataset.percent+'%'});
-  document.querySelectorAll('.match .watch').forEach(el=>el.textContent=tr('watch'));
-  const no=document.querySelector('.no-match-text');if(no)no.textContent=tr('noMatchText');
-  const alt=document.querySelector('.alt-match-text');if(alt)alt.textContent=tr('alt');
+$('lang-es').addEventListener('click',()=>setLanguage('es'));
+$('lang-en').addEventListener('click',()=>setLanguage('en'));
+function showStatus(key){status.dataset.key=key;status.textContent=tr(key);status.style.display='block'}
+function loadFile(file){
+ if(!file||!file.type.startsWith('image/')){showStatus('invalid');return}
+ selectedFile=file;$('previewImage').src=URL.createObjectURL(file);$('fileName').textContent=file.name;
+ preview.style.display='grid';results.style.display='none';status.style.display='none';status.dataset.key='';
 }
-$('lang-es').addEventListener('click',()=>applyLanguage('es'));
-$('lang-en').addEventListener('click',()=>applyLanguage('en'));
-
-function showStatus(html){status.innerHTML=html;status.style.display='block'}
-function loadFile(file){if(!file||!file.type.startsWith('image/')){showStatus('<strong>'+tr('invalid')+'</strong>');return}selectedFile=file;$('previewImage').src=URL.createObjectURL(file);$('fileName').textContent=file.name;preview.style.display='grid';results.style.display='none';status.style.display='none'}
-fileInput.addEventListener('change',e=>loadFile(e.target.files[0]));$('change').addEventListener('click',()=>fileInput.click());
-['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>loadFile(e.dataTransfer.files[0]));
+fileInput.addEventListener('change',e=>loadFile(e.target.files[0]));
+$('change').addEventListener('click',()=>fileInput.click());
+['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag')}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('drag')}));
+drop.addEventListener('drop',e=>loadFile(e.dataTransfer.files[0]));
 function loadImage(src){return new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=src})}
-// Normaliza el tablero completo tanto en capturas de pantalla como en imágenes ya recortadas.
-// Las referencias del catálogo (board-XXXX.png) YA están recortadas: nunca volver a recortarlas.
-function boardPixels(img, isReference=false){
-  let sx=0, sy=0, sw=img.width, sh=img.height;
-  const ratio=img.height/img.width;
 
-  if(!isReference && ratio>1.20){
-    // Captura vertical de teléfono: en Catdom el marco del tablero ocupa
-    // aproximadamente x=8%-92% y=22%-71% de la pantalla.
-    // Esto elimina cabecera, monedas, controles y anuncios/barras inferiores.
-    sx=img.width*0.08;
-    sy=img.height*0.22;
-    sw=img.width*0.84;
-    sh=img.height*0.49;
-  }
-  // Si la persona sube el tablero recortado, se utiliza la imagen completa.
-  // Las referencias también se utilizan completas.
-  const c=document.createElement('canvas');c.width=128;c.height=160;
-  const x=c.getContext('2d',{willReadFrequently:true});
-  x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';
-  x.drawImage(img,sx,sy,sw,sh,0,0,128,160);
-  return x.getImageData(0,0,128,160).data;
+function pixelsForCrop(img,sx,sy,sw,sh){
+ const c=document.createElement('canvas');c.width=96;c.height=120;
+ const ctx=c.getContext('2d',{willReadFrequently:true});
+ ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+ ctx.drawImage(img,sx,sy,sw,sh,0,0,96,120);
+ return ctx.getImageData(0,0,96,120).data;
 }
-function features(img,isReference=false){return boardPixels(img,isReference)}
+function referencePixels(img){return pixelsForCrop(img,0,0,img.width,img.height)}
 function distance(a,b){
-  // Mean RGB difference on the normalized playfield; lower is a closer match.
-  let total=0;for(let i=0;i<a.length;i+=4){total+=Math.abs(a[i]-b[i])+Math.abs(a[i+1]-b[i+1])+Math.abs(a[i+2]-b[i+2]);}
-  return total/(128*160*3);
+ let sum=0;for(let i=0;i<a.length;i+=4)sum+=Math.abs(a[i]-b[i])+Math.abs(a[i+1]-b[i+1])+Math.abs(a[i+2]-b[i+2]);
+ return sum/(96*120*3);
 }
-$('find').addEventListener('click',async()=>{if(!selectedFile)return;$('find').disabled=true;$('find').textContent=tr('analyzing');results.style.display='none';showStatus(tr('comparing'));try{const userImg=await loadImage(URL.createObjectURL(selectedFile));const userFeatures=features(userImg,false);const scored=[];for(const b of boards){const im=await loadImage(b.image);const f=features(im,true);scored.push({...b,score:distance(userFeatures,f)});}scored.sort((a,b)=>a.score-b.score);const best=scored[0];const confidence=Math.max(0,Math.min(99,Math.round(100-best.score)));$('matches').innerHTML='';if(best.score<42){$('resultTitle').dataset.state='possible';$('resultTitle').textContent=tr('possible');$('matches').appendChild(makeMatch(best,confidence));if(scored[1]&&scored[1].score<48){const alt=document.createElement('p');alt.className='score';alt.classList.add('alt-match-text');alt.textContent=tr('alt');$('matches').appendChild(alt)}}else{$('resultTitle').dataset.state='none';$('resultTitle').textContent=tr('noMatch');const p=document.createElement('p');p.style.color='var(--muted)';p.classList.add('no-match-text');p.textContent=tr('noMatchText');$('matches').appendChild(p);scored.slice(0,3).forEach(b=>$('matches').appendChild(makeMatch(b,Math.max(0,Math.round(100-b.score)),true)));}results.style.display='block';status.style.display='none';results.scrollIntoView({behavior:'smooth',block:'start'});}catch(err){showStatus('<strong>'+tr('error')+'</strong>');console.error(err)}finally{$('find').disabled=false;$('find').textContent=tr('find')}});
-function makeMatch(b,confidence,uncertain=false){const card=document.createElement('article');card.className='match';const img=document.createElement('img');img.src=b.image;img.alt='Tablero registrado '+b.id;const body=document.createElement('div');const title=document.createElement('div');title.innerHTML=`<span class="level" data-number="${b.level}">${tr('level')} ${b.level}</span><span class="id">${b.id}</span>`;const score=document.createElement('div');score.className='score';score.dataset.uncertain=uncertain?'1':'0';score.dataset.percent=confidence;score.textContent=(uncertain?tr('estimated'):tr('confidence'))+confidence+'%';const link=document.createElement('a');link.className='watch';link.href=b.walkthrough;link.target='_blank';link.rel='noopener noreferrer';link.textContent=tr('watch');body.append(title,score,link);card.append(img,body);return card}
-fetch('./data.json').then(r=>{if(!r.ok)throw new Error('data');return r.json()}).then(data=>{boards=data}).catch(()=>showStatus('<strong>'+tr('loadError')+'</strong>'));
-applyLanguage(currentLang);
+// For tall phone screenshots, test multiple plausible board rectangles rather than
+// assuming one fixed crop. The board is commonly left-of-center because of game UI overlays.
+// Also test the full image for users who upload an already-cropped board.
+function candidateCrops(img){
+ const W=img.width,H=img.height,ratio=H/W,candidates=[];
+ if(ratio<1.65){candidates.push({x:0,y:0,w:W,h:H});return candidates}
+ // Common Catdom phone screenshot board area: left 4–12%, top 16–24%;
+ // board width 60–72%, height 33–41%. Test neighboring crops to cover layout variants.
+ const xs=[.035,.055,.075,.095,.115], ws=[.60,.64,.68,.72];
+ const ys=[.155,.175,.195,.215,.235], hs=[.325,.35,.375,.40,.425];
+ for(const x of xs)for(const w of ws)for(const y of ys)for(const hh of hs){
+   if(x+w<=.90 && y+hh<=.80){
+    const cropRatio=(w*W)/(hh*H);
+    if(cropRatio>=.68&&cropRatio<=.98)candidates.push({x:x*W,y:y*H,w:w*W,h:hh*H});
+   }
+ }
+ // Add a centered crop and a wider crop as fallbacks for devices with different overlays.
+ for(const y of [.17,.20,.23])for(const hh of [.35,.39,.43]){
+  const w=.72,x=.03;
+  if(x+w<=1&&y+hh<=.85)candidates.push({x:x*W,y:y*H,w:w*W,h:hh*H});
+ }
+ return candidates;
+}
+function bestMatches(userImg,refs){
+ const crops=candidateCrops(userImg);
+ const cropFeatures=crops.map(r=>pixelsForCrop(userImg,r.x,r.y,r.w,r.h));
+ const bestByBoard=[];
+ for(const b of refs){
+  let best=Infinity;
+  for(const p of cropFeatures){
+   const d=distance(p,b.pixels);
+   if(d<best)best=d;
+  }
+  bestByBoard.push({...b,score:best});
+ }
+ return bestByBoard.sort((a,b)=>a.score-b.score);
+}
+function makeMatch(b,percent,uncertain=false){
+ const card=document.createElement('article');card.className='match';
+ const img=document.createElement('img');img.src=b.image;img.alt='Board '+b.id;
+ const body=document.createElement('div'),title=document.createElement('div');title.className='title';
+ const level=document.createElement('span');level.className='level';level.dataset.number=b.level;
+ const id=document.createElement('span');id.className='id';id.textContent=b.id;
+ title.append(level,id);
+ const score=document.createElement('div');score.className='score';score.dataset.percent=percent;score.dataset.uncertain=uncertain?'1':'0';
+ const link=document.createElement('a');link.className='watch';link.href=b.walkthrough;link.target='_blank';link.rel='noopener noreferrer';
+ body.append(title,score,link);card.append(img,body);translateCard(card);return card;
+}
+function translateCard(card){
+ const level=card.querySelector('.level'),score=card.querySelector('.score'),link=card.querySelector('.watch');
+ if(level)level.textContent=tr('level')+' '+level.dataset.number;
+ if(score)score.textContent=(score.dataset.uncertain==='1'?tr('estimated'):tr('match'))+score.dataset.percent+'%';
+ if(link)link.textContent=tr('watch');
+}
+function translateResults(){
+ const title=$('resultTitle');title.textContent=title.dataset.state==='possible'?tr('possible'):tr('none');
+ document.querySelectorAll('.match').forEach(translateCard);
+ const p=$('matches').querySelector('.result-explain');if(p)p.textContent=tr('noneText');
+ const alt=$('matches').querySelector('.result-close');if(alt)alt.textContent=tr('close');
+}
+$('find').addEventListener('click',async()=>{
+ if(!selectedFile||!boards.length)return;
+ $('find').disabled=true;$('find').textContent=tr('analyzing');results.style.display='none';showStatus('comparing');
+ try{
+  const userImg=await loadImage(URL.createObjectURL(selectedFile));
+  const scored=bestMatches(userImg,boards);
+  const best=scored[0],confidence=Math.max(0,Math.min(99,Math.round(100-best.score)));
+  $('matches').innerHTML='';
+  // Keep conservative rejection threshold; do not lower it to force a match.
+  if(best.score<42){
+   $('resultTitle').dataset.state='possible';$('matches').appendChild(makeMatch(best,confidence));
+   if(scored[1]&&scored[1].score<48){
+    const alt=document.createElement('p');alt.className='score result-close';$('matches').appendChild(alt);alt.textContent=tr('close');
+   }
+  }else{
+   $('resultTitle').dataset.state='none';
+   const p=document.createElement('p');p.className='result-explain';p.style.color='var(--muted)';p.textContent=tr('noneText');$('matches').appendChild(p);
+   scored.slice(0,3).forEach(b=>$('matches').appendChild(makeMatch(b,Math.max(0,Math.round(100-b.score)),true)));
+  }
+  translateResults();results.style.display='block';status.style.display='none';results.scrollIntoView({behavior:'smooth',block:'start'});
+ }catch(err){console.error(err);showStatus('error')}
+ finally{$('find').disabled=false;$('find').textContent=tr('find')}
+});
+fetch('./data.json').then(r=>{if(!r.ok)throw new Error('data');return r.json()}).then(data=>{
+ boards=data.map(b=>({...b})); 
+ // Preload and normalize every catalog reference once.
+ return Promise.all(boards.map(async b=>{const im=await loadImage(b.image);b.pixels=referencePixels(im);return b}));
+}).then(()=>{ /* catalog ready */ }).catch(err=>{console.error(err);showStatus('loadError')});
+setLanguage(currentLang);
 </script></body></html>
