@@ -95,42 +95,71 @@ function pixelsForCrop(img,sx,sy,sw,sh){
  ctx.drawImage(img,sx,sy,sw,sh,0,0,96,120);
  return ctx.getImageData(0,0,96,120).data;
 }
-function referencePixels(img){return pixelsForCrop(img,0,0,img.width,img.height)}
-function distance(a,b){
- let sum=0;for(let i=0;i<a.length;i+=4)sum+=Math.abs(a[i]-b[i])+Math.abs(a[i+1]-b[i+1])+Math.abs(a[i+2]-b[i+2]);
- return sum/(96*120*3);
+function describePixels(data){
+ const gray=new Float32Array(96*120), blocks=[];
+ for(let y=0;y<120;y++)for(let x=0;x<96;x++){
+  const i=(y*96+x)*4;
+  gray[y*96+x]=.299*data[i]+.587*data[i+1]+.114*data[i+2];
+ }
+ // Spatial color means retain the arrangement of colored pieces, not just a global histogram.
+ const cols=8,rows=10,bw=12,bh=12;
+ for(let by=0;by<rows;by++)for(let bx=0;bx<cols;bx++){
+  let r=0,g=0,b=0,n=0;
+  for(let y=by*bh;y<(by+1)*bh;y++)for(let x=bx*bw;x<(bx+1)*bw;x++){
+   const i=(y*96+x)*4;r+=data[i];g+=data[i+1];b+=data[i+2];n++;
+  }
+  blocks.push(r/n,g/n,b/n);
+ }
+ // Gradient magnitude map emphasizes piece boundaries and board geometry.
+ const edges=new Float32Array(96*120);
+ for(let y=1;y<119;y++)for(let x=1;x<95;x++){
+  const i=y*96+x;
+  const gx=gray[i+1]-gray[i-1],gy=gray[i+96]-gray[i-96];
+  edges[i]=Math.min(255,Math.hypot(gx,gy));
+ }
+ return {data,gray,edges,blocks};
 }
-// For tall phone screenshots, test multiple plausible board rectangles rather than
-// assuming one fixed crop. The board is commonly left-of-center because of game UI overlays.
-// Also test the full image for users who upload an already-cropped board.
+function referencePixels(img){return describePixels(pixelsForCrop(img,0,0,img.width,img.height))}
+function descriptorDistance(a,b){
+ let pixel=0,edge=0,block=0;
+ for(let i=0;i<a.data.length;i+=4){
+  pixel+=Math.abs(a.data[i]-b.data[i])+Math.abs(a.data[i+1]-b.data[i+1])+Math.abs(a.data[i+2]-b.data[i+2]);
+ }
+ pixel/=96*120*3;
+ for(let i=0;i<a.edges.length;i++)edge+=Math.abs(a.edges[i]-b.edges[i]);
+ edge/=96*120;
+ for(let i=0;i<a.blocks.length;i++)block+=Math.abs(a.blocks[i]-b.blocks[i]);
+ block/=a.blocks.length;
+ // Blend color layout with boundaries. Scores remain on an approximately 0–255 scale.
+ return pixel*.55+edge*.30+block*.15;
+}
+// Search multiple likely board locations and sizes. This accepts full phone/social screenshots
+// and already-cropped board images. Candidate crops are normalized identically to references.
 function candidateCrops(img){
  const W=img.width,H=img.height,ratio=H/W,candidates=[];
- if(ratio<1.65){candidates.push({x:0,y:0,w:W,h:H});return candidates}
- // Common Catdom phone screenshot board area: left 4–12%, top 16–24%;
- // board width 60–72%, height 33–41%. Test neighboring crops to cover layout variants.
- const xs=[.035,.055,.075,.095,.115], ws=[.60,.64,.68,.72];
- const ys=[.155,.175,.195,.215,.235], hs=[.325,.35,.375,.40,.425];
- for(const x of xs)for(const w of ws)for(const y of ys)for(const hh of hs){
-   if(x+w<=.90 && y+hh<=.80){
-    const cropRatio=(w*W)/(hh*H);
-    if(cropRatio>=.68&&cropRatio<=.98)candidates.push({x:x*W,y:y*H,w:w*W,h:hh*H});
-   }
+ if(ratio<1.55){candidates.push({x:0,y:0,w:W,h:H});return candidates}
+ const xs=[.025,.045,.065,.085,.105,.125],ws=[.58,.62,.66,.70,.74,.78];
+ const ys=[.13,.15,.17,.19,.21,.23,.25],hs=[.30,.33,.36,.39,.42,.45,.48];
+ for(const x of xs)for(const w of ws)for(const y of ys)for(const h of hs){
+  if(x+w<=.94&&y+h<=.86){
+   const cr=(w*W)/(h*H);
+   if(cr>=.62&&cr<=1.08)candidates.push({x:x*W,y:y*H,w:w*W,h:h*H});
+  }
  }
- // Add a centered crop and a wider crop as fallbacks for devices with different overlays.
- for(const y of [.17,.20,.23])for(const hh of [.35,.39,.43]){
-  const w=.72,x=.03;
-  if(x+w<=1&&y+hh<=.85)candidates.push({x:x*W,y:y*H,w:w*W,h:hh*H});
+ // A few broad candidates handle screenshots with unusual UI proportions.
+ for(const x of [.02,.06,.10])for(const y of [.14,.19,.24])for(const w of [.76,.82,.88])for(const h of [.42,.48,.54]){
+  if(x+w<=1&&y+h<=.92)candidates.push({x:x*W,y:y*H,w:w*W,h:h*H});
  }
  return candidates;
 }
 function bestMatches(userImg,refs){
  const crops=candidateCrops(userImg);
- const cropFeatures=crops.map(r=>pixelsForCrop(userImg,r.x,r.y,r.w,r.h));
+ const cropFeatures=crops.map(r=>describePixels(pixelsForCrop(userImg,r.x,r.y,r.w,r.h)));
  const bestByBoard=[];
  for(const b of refs){
   let best=Infinity;
-  for(const p of cropFeatures){
-   const d=distance(p,b.pixels);
+  for(const feature of cropFeatures){
+   const d=descriptorDistance(feature,b.pixels);
    if(d<best)best=d;
   }
   bestByBoard.push({...b,score:best});
