@@ -16,7 +16,7 @@
 <section id="preview" class="preview-wrap"><img id="previewImage" alt="Vista previa de tu captura"><div><div class="filename" id="fileName"></div><div class="sub">Captura lista para comparar.</div><div class="actions"><button id="find" class="button">Buscar mi tablero</button><button id="change" class="button secondary">Cambiar imagen</button></div></div></section>
 <div id="status" class="status" role="status" aria-live="polite"></div>
 <section id="results" class="results"><h2 id="resultTitle">Tableros más parecidos</h2><div id="matches"></div></section>
-<div class="note"><strong>Versión de prueba:</strong> el buscador compara automáticamente la estructura visual y los colores de tu captura con los tableros registrados. Si el tablero no está en nuestra colección, todavía no podrá encontrar su walkthrough. Estamos afinando la precisión con capturas reales.</div>
+<div class="note"><strong>Versión de prueba:</strong> el buscador compara automáticamente el área del tablero y sus colores de tu captura con los tableros registrados. Si el tablero no está en nuestra colección, todavía no podrá encontrar su walkthrough. Estamos afinando la precisión con capturas reales.</div>
 <footer>Made for Catdom Color Hole players · Game Level Solutions</footer>
 </main>
 <script>
@@ -27,13 +27,31 @@ function loadFile(file){if(!file||!file.type.startsWith('image/')){showStatus('<
 fileInput.addEventListener('change',e=>loadFile(e.target.files[0]));$('change').addEventListener('click',()=>fileInput.click());
 ['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>loadFile(e.dataTransfer.files[0]));
 function loadImage(src){return new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=src})}
-// Normalize the playfield area, excluding most of the outer phone/game interface.
-function normalizedPixels(img){const c=document.createElement('canvas');c.width=64;c.height=64;const x=c.getContext('2d',{willReadFrequently:true});const sx=img.width*.04,sy=img.height*.105,sw=img.width*.92,sh=img.height*.83;x.drawImage(img,sx,sy,sw,sh,0,0,64,64);return x.getImageData(0,0,64,64).data}
-function features(img){const p=normalizedPixels(img),gray=new Float32Array(64*64),hist=new Float32Array(24);for(let i=0,j=0;i<p.length;i+=4,j++){const r=p[i],g=p[i+1],b=p[i+2];gray[j]=.299*r+.587*g+.114*b;hist[Math.floor(r/64)]++;hist[4+Math.floor(g/64)]++;hist[8+Math.floor(b/64)]++;const lum=(r+g+b)/3;hist[12+Math.min(7,Math.floor(lum/32))]++;}for(let k=0;k<hist.length;k++)hist[k]/=4096;return{gray,hist}}
-// A compact perceptual signature: compare low-frequency image structure, not exact pixels.
-function dctHash(gray){const n=32,vals=new Float32Array(n*n);for(let y=0;y<n;y++)for(let x=0;x<n;x++){let sum=0;for(let yy=0;yy<64;yy++)for(let xx=0;xx<64;xx++){const v=gray[yy*64+xx];sum+=v*Math.cos((Math.PI*(2*xx+1)*x)/(2*64))*Math.cos((Math.PI*(2*yy+1)*y)/(2*64));}vals[y*n+x]=sum;}const low=[];for(let y=0;y<8;y++)for(let x=0;x<8;x++)low.push(vals[y*n+x]);const sorted=low.slice(1).sort((a,b)=>a-b),median=sorted[Math.floor(sorted.length/2)];return low.map(v=>v>median?1:0)}
-function distance(a,b){let hd=0;for(let i=0;i<a.hash.length;i++)if(a.hash[i]!==b.hash[i])hd++;let cd=0;for(let i=0;i<a.hist.length;i++)cd+=Math.abs(a.hist[i]-b.hist[i]);return .78*(hd/64)+.22*(cd/8)}
-$('find').addEventListener('click',async()=>{if(!selectedFile)return;$('find').disabled=true;$('find').textContent='Analizando…';results.style.display='none';showStatus('Estamos comparando tu captura con los tableros registrados…');try{const userImg=await loadImage(URL.createObjectURL(selectedFile));const userFeatures=features(userImg);userFeatures.hash=dctHash(userFeatures.gray);const scored=[];for(const b of boards){const im=await loadImage(b.image);const f=features(im);f.hash=dctHash(f.gray);scored.push({...b,score:distance(userFeatures,f)});}scored.sort((a,b)=>a.score-b.score);const best=scored[0];const confidence=Math.max(0,Math.min(99,Math.round((1-best.score)*100)));$('matches').innerHTML='';if(best.score<.24){$('resultTitle').textContent='¡Encontramos un posible tablero!';$('matches').appendChild(makeMatch(best,confidence));if(scored[1]&&scored[1].score<.30){const alt=document.createElement('p');alt.className='score';alt.textContent='También hay otra coincidencia cercana; revisa que la primera imagen corresponda a tu tablero.';$('matches').appendChild(alt)}}else{$('resultTitle').textContent='No encontramos una coincidencia segura';const p=document.createElement('p');p.style.color='var(--muted)';p.textContent='Estos son los tableros visualmente más parecidos. Ninguno alcanzó el umbral de coincidencia; puede que tu tablero aún no esté registrado.';$('matches').appendChild(p);scored.slice(0,3).forEach(b=>$('matches').appendChild(makeMatch(b,Math.max(0,Math.round((1-b.score)*100)),true)));}results.style.display='block';status.style.display='none';results.scrollIntoView({behavior:'smooth',block:'start'});}catch(err){showStatus('<strong>No pudimos analizar esa imagen.</strong> Intenta con una captura PNG o JPG más clara.');console.error(err)}finally{$('find').disabled=false;$('find').textContent='Buscar mi tablero'}});
+// Extract the actual board instead of comparing the whole phone screenshot.
+// Uploaded full-screen portrait captures and stored reference crops have different layouts.
+function boardPixels(img, isReference=false){
+  const portrait=img.height/img.width>1.25;
+  let sx=0,sy=0,sw=img.width,sh=img.height;
+  if(isReference){
+    // Our catalog thumbnails include the game header; isolate the framed playfield.
+    sx=img.width*.093; sy=img.height*.251; sw=img.width*.785; sh=img.height*.695;
+  } else if(portrait){
+    // Full phone/TikTok screenshot: board frame occupies this central screen region.
+    sx=img.width*.093; sy=img.height*.260; sw=img.width*.814; sh=img.height*.440;
+  }
+  const c=document.createElement('canvas');c.width=128;c.height=160;
+  const x=c.getContext('2d',{willReadFrequently:true});
+  x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';
+  x.drawImage(img,sx,sy,sw,sh,0,0,128,160);
+  return x.getImageData(0,0,128,160).data;
+}
+function features(img,isReference=false){return boardPixels(img,isReference)}
+function distance(a,b){
+  // Mean RGB difference on the normalized playfield; lower is a closer match.
+  let total=0;for(let i=0;i<a.length;i+=4){total+=Math.abs(a[i]-b[i])+Math.abs(a[i+1]-b[i+1])+Math.abs(a[i+2]-b[i+2]);}
+  return total/(128*160*3);
+}
+$('find').addEventListener('click',async()=>{if(!selectedFile)return;$('find').disabled=true;$('find').textContent='Analizando…';results.style.display='none';showStatus('Estamos comparando tu captura con los tableros registrados…');try{const userImg=await loadImage(URL.createObjectURL(selectedFile));const userFeatures=features(userImg,false);const scored=[];for(const b of boards){const im=await loadImage(b.image);const f=features(im,true);scored.push({...b,score:distance(userFeatures,f)});}scored.sort((a,b)=>a.score-b.score);const best=scored[0];const confidence=Math.max(0,Math.min(99,Math.round(100-best.score)));$('matches').innerHTML='';if(best.score<42){$('resultTitle').textContent='¡Encontramos un posible tablero!';$('matches').appendChild(makeMatch(best,confidence));if(scored[1]&&scored[1].score<48){const alt=document.createElement('p');alt.className='score';alt.textContent='También hay otra coincidencia cercana; revisa que la primera imagen corresponda a tu tablero.';$('matches').appendChild(alt)}}else{$('resultTitle').textContent='No encontramos una coincidencia segura';const p=document.createElement('p');p.style.color='var(--muted)';p.textContent='Estos son los tableros visualmente más parecidos. Ninguno alcanzó el umbral de coincidencia; puede que tu tablero aún no esté registrado.';$('matches').appendChild(p);scored.slice(0,3).forEach(b=>$('matches').appendChild(makeMatch(b,Math.max(0,Math.round(100-b.score)),true)));}results.style.display='block';status.style.display='none';results.scrollIntoView({behavior:'smooth',block:'start'});}catch(err){showStatus('<strong>No pudimos analizar esa imagen.</strong> Intenta con una captura PNG o JPG más clara.');console.error(err)}finally{$('find').disabled=false;$('find').textContent='Buscar mi tablero'}});
 function makeMatch(b,confidence,uncertain=false){const card=document.createElement('article');card.className='match';const img=document.createElement('img');img.src=b.image;img.alt='Tablero registrado '+b.id;const body=document.createElement('div');const title=document.createElement('div');title.innerHTML=`<span class="level">Nivel ${b.level}</span><span class="id">${b.id}</span>`;const score=document.createElement('div');score.className='score';score.textContent=(uncertain?'Similitud estimada: ':'Coincidencia estimada: ')+confidence+'%';const link=document.createElement('a');link.className='watch';link.href=b.walkthrough;link.target='_blank';link.rel='noopener noreferrer';link.textContent='▶ Ver walkthrough';body.append(title,score,link);card.append(img,body);return card}
 fetch('./data.json').then(r=>{if(!r.ok)throw new Error('data');return r.json()}).then(data=>{boards=data}).catch(()=>showStatus('<strong>No pudimos cargar la base de tableros.</strong> Recarga la página más tarde.'));
 </script></body></html>
