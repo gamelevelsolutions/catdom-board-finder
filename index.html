@@ -13,6 +13,11 @@
 .kofi p{color:var(--muted);font-size:.9rem;margin:5px auto 14px;max-width:510px}
 .kofi-link{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:11px 19px;border-radius:999px;background:#ff75bd;color:#21142b;text-decoration:none;font-weight:850;transition:transform .15s ease}
 .kofi-link:hover{transform:translateY(-2px)}
+.availability{margin-top:18px;padding:13px 18px}
+.availability p{margin:0;color:var(--muted);font-size:.88rem;line-height:1.55;text-align:center}
+.contact{max-width:650px;margin:16px auto 0;text-align:center;color:var(--muted);font-size:.86rem;line-height:1.6}
+.contact a{color:var(--cyan);text-decoration:none}
+.contact a:hover{text-decoration:underline}
 .hidden-canvas{display:none}@media(max-width:520px){.head-right{gap:5px}.lang-btn{padding:6px 9px}.brand{font-size:.9rem}.wrap{padding:18px 14px 42px}header{margin-bottom:36px}.tag{display:none}.upload{padding:22px 14px}.match{grid-template-columns:95px 1fr;gap:11px}.match img{width:95px;height:130px}.preview-wrap{grid-template-columns:85px 1fr}.preview-wrap img{width:85px;height:110px}}
 
 .head-right{display:flex;align-items:center;gap:10px}.lang-switch{display:flex;gap:5px}.lang-btn{border:1px solid var(--line);background:#ffffff0b;color:var(--muted);border-radius:999px;padding:7px 11px;font-weight:800;cursor:pointer}.lang-btn.active{background:linear-gradient(110deg,var(--pink),#a987ff);color:#21142b;border-color:transparent}
@@ -39,11 +44,15 @@
   <p data-i18n="aboutText">Todo comenzó en octubre de 2026, cuando abrí mi propio canal de YouTube, <strong>Game Level Solutions</strong>, para compartir walkthroughs de Catdom Color Hole. Ya iba bastante avanzada en el juego y comencé mi colección en el nivel 1282, porque los walkthroughs que encontraba no siempre coincidían con los tableros de mis propios niveles. Pensé que quizá alguna actualización había cambiado la numeración o la secuencia de los niveles. Así que empecé a grabar y compartir mis propias soluciones, siguiendo mi progreso.  Hacia finales de octubre de 2026, cuando ya estaba alrededor del nivel 1801, me encontré con tableros que recordaba haber jugado antes, pero que ahora aparecían con otro número de nivel. Eso me hizo pensar que las actualizaciones quizá no solo agregaban niveles nuevos, sino que también podían recuperar o reorganizar tableros anteriores con una numeración diferente.  Entonces se me ocurrió una idea: ¿y si, en lugar de buscar un walkthrough por número de nivel, pudiéramos encontrarlo por la apariencia del tablero? Así nació <strong>Catdom Board Finder</strong>: una herramienta creada por una jugadora, para los amantes de Catdom Color Hole, que permite buscar walkthroughs comparando visualmente la configuración del tablero, sin depender únicamente de su número de nivel.</p>
 </section>
 
+<section class="about availability" aria-label="Collection update">
+  <p data-i18n="collectionNote">Por ahora la colección todavía es pequeña, pero iré agregando más tableros poco a poco. ¡Vuelve pronto!</p>
+</section>
 <section class="kofi" aria-label="Support Catdom Board Finder">
   <strong data-i18n="kofiTitle">¿Te sirvió Catdom Board Finder?</strong>
-  <p data-i18n="kofiText">Estoy empezando y cada cafecito me ayuda a agregar más tableros, mejorar el buscador y mantenerlo gratuito.</p>
+  <p data-i18n="kofiText">Estoy empezando y cada cafecito me ayuda a agregar más tableros, mejorar el buscador y mantenerlo gratuito. Si te resultó útil, puedes invitarme un cafecito en el botón de abajo. ¡Gracias por apoyar este proyecto!</p>
   <a class="kofi-link" href="https://ko-fi.com/catdomboardfinder" target="_blank" rel="noopener noreferrer" data-i18n="kofiButton">☕ Invítame un café</a>
- </section>
+</section>
+<p class="contact" data-i18n="contactText">¿Quieres escribirme? Puedes contactarme en <a href="mailto:gamelevelsolutions@gmail.com">gamelevelsolutions@gmail.com</a>.</p>
 <footer data-i18n="footer">Hecho para jugadores de Catdom Color Hole · Game Level Solutions</footer>
 </main>
 <script>
@@ -64,7 +73,10 @@ es:{
  aboutText:'Todo comenzó en octubre de 2026, cuando abrí mi propio canal de YouTube, <strong>Game Level Solutions</strong>, para compartir walkthroughs de Catdom Color Hole. Ya iba bastante avanzada en el juego y comencé mi colección en el nivel 1282, porque los walkthroughs que encontraba no siempre coincidían con los tableros de mis propios niveles. Pensé que quizá alguna actualización había cambiado la numeración o la secuencia de los niveles. Así que empecé a grabar y compartir mis propias soluciones, siguiendo mi progreso.  Hacia finales de octubre de 2026, cuando ya estaba alrededor del nivel 1801, me encontré con tableros que recordaba haber jugado antes, pero que ahora aparecían con otro número de nivel. Eso me hizo pensar que las actualizaciones quizá no solo agregaban niveles nuevos, sino que también podían recuperar o reorganizar tableros anteriores con una numeración diferente.  Entonces se me ocurrió una idea: ¿y si, en lugar de buscar un walkthrough por número de nivel, pudiéramos encontrarlo por la apariencia del tablero? Así nació <strong>Catdom Board Finder</strong>: una herramienta creada por una jugadora, para los amantes de Catdom Color Hole, que permite buscar walkthroughs comparando visualmente la configuración del tablero, sin depender únicamente de su número de nivel.',
  kofiTitle:'¿Te sirvió Catdom Board Finder?',
   kofiText:'Estoy empezando y cada cafecito me ayuda a agregar más tableros, mejorar el buscador y mantenerlo gratuito.',
-  kofiButton:'☕ Invítame un café',
+  collectionNote:'Por ahora la colección todavía es pequeña, pero iré agregando más tableros poco a poco. ¡Vuelve pronto!',
+ contactText:'¿Quieres escribirme? Puedes contactarme en <a href="mailto:gamelevelsolutions@gmail.com">gamelevelsolutions@gmail.com</a>.',
+ kofiText:'Estoy empezando y cada cafecito me ayuda a agregar más tableros, mejorar el buscador y mantenerlo gratuito. Si te resultó útil, puedes invitarme un cafecito en el botón de abajo. ¡Gracias por apoyar este proyecto!',
+ kofiButton:'☕ Invítame un café',
  footer:'Hecho para jugadores de Catdom Color Hole · Game Level Solutions',
  invalid:'Ese archivo no parece ser una imagen. Elige una captura PNG, JPG o WEBP.',
  analyzing:'Analizando…',comparing:'Buscando el tablero dentro de tu captura y comparándolo con la colección…',
@@ -87,6 +99,10 @@ en:{
  aboutText:'It all started in October 2026, when I created my own YouTube channel, <strong>Game Level Solutions</strong>, to share Catdom Color Hole walkthroughs. I was already quite far into the game, and my collection began at level 1282 because the walkthroughs I found did not always match the boards in my own levels. I thought an update might have changed the level numbering or sequence. So I started recording and sharing my own solutions as I progressed through the game.  Toward the end of October 2026, when I was around level 1801, I came across boards I remembered playing before, but they were now appearing under different level numbers. This made me wonder whether updates might not only add new levels, but also bring back or rearrange previous boards with different numbering.  Then I had an idea: what if, instead of searching for a walkthrough by level number, players could find it by the board\'s visual layout? That\'s how <strong>Catdom Board Finder</strong> was born: a tool created by a player, for Catdom Color Hole fans, to find walkthroughs by visually matching the board instead of relying only on its level number.',
  kofiTitle:'Did Catdom Board Finder help you?',
   kofiText:'I’m just getting started, and every coffee helps me add more boards, improve the search tool, and keep it free.',
+ collectionNote:'The collection is still small for now, but I’ll keep adding more boards as I go. Check back soon!',
+ contactText:'Want to get in touch? Email me at <a href="mailto:gamelevelsolutions@gmail.com">gamelevelsolutions@gmail.com</a>.',
+ kofiText:'I’m just getting started, and every coffee helps me add more boards, improve the finder, and keep it free. If you found it useful, you can buy me a coffee using the button below. Thanks for supporting this project!',
+
   kofiButton:'☕ Buy me a coffee',
  footer:'Made for Catdom Color Hole players · Game Level Solutions',
  invalid:'This file does not appear to be an image. Choose a PNG, JPG, or WEBP screenshot.',
