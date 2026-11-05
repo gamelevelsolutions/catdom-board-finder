@@ -11,12 +11,12 @@
 </head>
 <body><main class="wrap">
 <header><div class="brand"><div class="mark">🐱</div><span>CATDOM BOARD FINDER</span></div><div class="tag">Game Level Solutions</div></header>
-<section class="hero"><div class="eyebrow">Tu tablero. Nuestra búsqueda.</div><h1>Find your <span>Catdom</span><br>walkthrough.</h1><p>Sube una captura de la pantalla inicial de tu nivel. Compararemos el tablero automáticamente con los que tenemos registrados y te mostraremos la solución.</p></section>
-<section id="dropzone" class="upload" aria-label="Área para subir captura"><div class="upload-icon">📸</div><strong>Arrastra aquí la captura de tu tablero</strong><p>O selecciónala desde tu dispositivo. Procura que se vea el tablero completo.</p><label class="button" for="file">Elegir imagen</label><input id="file" type="file" accept="image/*"><div class="privacy">La imagen se analiza en tu navegador; no se envía a un servidor.</div></section>
+<section class="hero"><div class="eyebrow">Tu tablero. Nuestra búsqueda.</div><h1>Find your <span>Catdom</span><br>walkthrough.</h1><p>Sube una captura de pantalla tal como la tomaste, o una imagen del tablero recortado. Detectaremos el área de juego y la compararemos con los tableros registrados.</p></section>
+<section id="dropzone" class="upload" aria-label="Área para subir captura"><div class="upload-icon">📸</div><strong>Sube una captura de tu pantalla</strong><p>O selecciónala desde tu dispositivo. No necesitas recortar ni editar la imagen; solo procura que se vea el tablero completo.</p><label class="button" for="file">Elegir imagen</label><input id="file" type="file" accept="image/*"><div class="privacy">La imagen se analiza en tu navegador; no se envía a un servidor.</div></section>
 <section id="preview" class="preview-wrap"><img id="previewImage" alt="Vista previa de tu captura"><div><div class="filename" id="fileName"></div><div class="sub">Captura lista para comparar.</div><div class="actions"><button id="find" class="button">Buscar mi tablero</button><button id="change" class="button secondary">Cambiar imagen</button></div></div></section>
 <div id="status" class="status" role="status" aria-live="polite"></div>
 <section id="results" class="results"><h2 id="resultTitle">Tableros más parecidos</h2><div id="matches"></div></section>
-<div class="note"><strong>Versión de prueba:</strong> el buscador compara automáticamente el área del tablero y sus colores de tu captura con los tableros registrados. Si el tablero no está en nuestra colección, todavía no podrá encontrar su walkthrough. Estamos afinando la precisión con capturas reales.</div>
+<div class="note"><strong>Versión de prueba:</strong> el buscador extrae el área de juego de capturas verticales de teléfono o utiliza directamente imágenes del tablero recortado. Si el tablero no está en nuestra colección, todavía no podrá encontrar su walkthrough. Estamos afinando la precisión con capturas reales.</div>
 <footer>Made for Catdom Color Hole players · Game Level Solutions</footer>
 </main>
 <script>
@@ -27,18 +27,23 @@ function loadFile(file){if(!file||!file.type.startsWith('image/')){showStatus('<
 fileInput.addEventListener('change',e=>loadFile(e.target.files[0]));$('change').addEventListener('click',()=>fileInput.click());
 ['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>loadFile(e.dataTransfer.files[0]));
 function loadImage(src){return new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=src})}
-// Extract the actual board instead of comparing the whole phone screenshot.
-// Uploaded full-screen portrait captures and stored reference crops have different layouts.
+// Normaliza el tablero completo tanto en capturas de pantalla como en imágenes ya recortadas.
+// Las referencias del catálogo (board-XXXX.png) YA están recortadas: nunca volver a recortarlas.
 function boardPixels(img, isReference=false){
-  const portrait=img.height/img.width>1.25;
-  let sx=0,sy=0,sw=img.width,sh=img.height;
-  if(isReference){
-    // Our catalog thumbnails include the game header; isolate the framed playfield.
-    sx=img.width*.093; sy=img.height*.251; sw=img.width*.785; sh=img.height*.695;
-  } else if(portrait){
-    // Full phone/TikTok screenshot: board frame occupies this central screen region.
-    sx=img.width*.093; sy=img.height*.260; sw=img.width*.814; sh=img.height*.440;
+  let sx=0, sy=0, sw=img.width, sh=img.height;
+  const ratio=img.height/img.width;
+
+  if(!isReference && ratio>1.20){
+    // Captura vertical de teléfono: en Catdom el marco del tablero ocupa
+    // aproximadamente x=8%-92% y=22%-71% de la pantalla.
+    // Esto elimina cabecera, monedas, controles y anuncios/barras inferiores.
+    sx=img.width*0.08;
+    sy=img.height*0.22;
+    sw=img.width*0.84;
+    sh=img.height*0.49;
   }
+  // Si la persona sube el tablero recortado, se utiliza la imagen completa.
+  // Las referencias también se utilizan completas.
   const c=document.createElement('canvas');c.width=128;c.height=160;
   const x=c.getContext('2d',{willReadFrequently:true});
   x.imageSmoothingEnabled=true;x.imageSmoothingQuality='high';
