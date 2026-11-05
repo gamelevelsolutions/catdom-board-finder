@@ -15,6 +15,14 @@
 
 .head-right{display:flex;align-items:center;gap:10px}.lang-switch{display:flex;gap:5px}.lang-btn{border:1px solid var(--line);background:#ffffff0b;color:var(--muted);border-radius:999px;padding:7px 11px;font-weight:800;cursor:pointer}.lang-btn.active{background:linear-gradient(110deg,var(--pink),#a987ff);color:#21142b;border-color:transparent}
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1FXJ3CJC8K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-1FXJ3CJC8K');
+</script>
 </head>
 <body><main class="wrap">
 <header><div class="brand"><div class="mark">🐱</div><span>CATDOM BOARD FINDER</span></div><div class="head-right"><div class="tag">Game Level Solutions</div><div class="lang-switch" aria-label="Language"><button id="lang-es" class="lang-btn" type="button">ES</button><button id="lang-en" class="lang-btn" type="button">EN</button></div></div></header>
@@ -207,6 +215,10 @@ function translateResults(){
 }
 $('find').addEventListener('click',async()=>{
  if(!selectedFile||!boards.length)return;
+ if(typeof gtag==='function') gtag('event','board_search', {
+   event_category:'engagement',
+   event_label:'Catdom Board Finder'
+ });
  $('find').disabled=true;$('find').textContent=tr('analyzing');results.style.display='none';showStatus('comparing');
  try{
   const userImg=await loadImage(URL.createObjectURL(selectedFile));
@@ -234,4 +246,16 @@ fetch('./data.json').then(r=>{if(!r.ok)throw new Error('data');return r.json()})
  return Promise.all(boards.map(async b=>{const im=await loadImage(b.image);b.pixels=referencePixels(im);return b}));
 }).then(()=>{ /* catalog ready */ }).catch(err=>{console.error(err);showStatus('loadError')});
 setLanguage(currentLang);
+
+// Track outbound links without collecting personal information.
+document.addEventListener('click', function(event) {
+  const link = event.target.closest('a');
+  if (!link || typeof gtag !== 'function') return;
+  const href = link.href || '';
+  if (href.includes('ko-fi.com/catdomboardfinder')) {
+    gtag('event', 'kofi_click', {link_url: href});
+  } else if (link.classList.contains('watch')) {
+    gtag('event', 'walkthrough_click', {link_url: href});
+  }
+});
 </script></body></html>
