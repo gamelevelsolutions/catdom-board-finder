@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gamelevelsolutions.github.io/catdom-board-finder/sitemap.xml
