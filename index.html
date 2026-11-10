@@ -15,6 +15,14 @@
 .kofi-link:hover{transform:translateY(-2px)}
 .availability{margin-top:18px;padding:13px 18px}
 .availability p{margin:0;color:var(--muted);font-size:.88rem;line-height:1.55;text-align:center}
+.collection-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;text-align:center}
+.collection-stat{padding:12px 8px;border:1px solid var(--line);border-radius:13px;background:#ffffff05}
+.collection-stat .label{display:block;color:var(--muted);font-size:.7rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;line-height:1.4}
+.collection-stat .value{display:block;color:var(--text);font-size:clamp(1.1rem,3vw,1.65rem);font-weight:900;line-height:1.25;margin-top:7px}
+.collection-stat.total .value{color:var(--green)}
+.collection-updated{margin:13px 0 0!important;color:var(--muted);font-size:.78rem!important;text-align:center}
+@media(max-width:520px){.collection-stats{grid-template-columns:1fr;gap:8px}.collection-stat{display:flex;align-items:center;justify-content:space-between;text-align:left;padding:10px 13px}.collection-stat .value{margin:0;font-size:1.2rem}}
+
 .contact{max-width:650px;margin:16px auto 0;text-align:center;color:var(--muted);font-size:.86rem;line-height:1.6}
 .contact a{color:var(--cyan);text-decoration:none}
 .contact a:hover{text-decoration:underline}
@@ -45,7 +53,9 @@
 </section>
 
 <section class="about availability" aria-label="Collection update">
-  <p data-i18n="collectionNote">Por ahora la colección todavía es pequeña, pero iré agregando más tableros poco a poco. ¡Vuelve pronto!</p>
+  <div id="collection-stats" aria-live="polite">
+    <p class="stats-loading">Cargando información de la colección…</p>
+  </div>
 </section>
 <section class="kofi" aria-label="Support Catdom Board Finder">
   <strong data-i18n="kofiTitle">¿Te sirvió Catdom Board Finder?</strong>
@@ -73,7 +83,7 @@ es:{
  aboutText:'Todo comenzó en octubre de 2026, cuando abrí mi propio canal de YouTube, <strong>Game Level Solutions</strong>, para compartir walkthroughs de Catdom Color Hole. Ya iba bastante avanzada en el juego y comencé mi colección en el nivel 1282, porque los walkthroughs que encontraba no siempre coincidían con los tableros de mis propios niveles. Pensé que quizá alguna actualización había cambiado la numeración o la secuencia de los niveles. Así que empecé a grabar y compartir mis propias soluciones, siguiendo mi progreso.  Hacia finales de octubre de 2026, cuando ya estaba alrededor del nivel 1801, me encontré con tableros que recordaba haber jugado antes, pero que ahora aparecían con otro número de nivel. Eso me hizo pensar que las actualizaciones quizá no solo agregaban niveles nuevos, sino que también podían recuperar o reorganizar tableros anteriores con una numeración diferente.  Entonces se me ocurrió una idea: ¿y si, en lugar de buscar un walkthrough por número de nivel, pudiéramos encontrarlo por la apariencia del tablero? Así nació <strong>Catdom Board Finder</strong>: una herramienta creada por una jugadora, para los amantes de Catdom Color Hole, que permite buscar walkthroughs comparando visualmente la configuración del tablero, sin depender únicamente de su número de nivel.',
  kofiTitle:'¿Te sirvió Catdom Board Finder?',
   kofiText:'Estoy empezando y cada cafecito me ayuda a agregar más tableros, mejorar el buscador y mantenerlo gratuito.',
-  collectionNote:'¿No aparece tu tablero? Es posible que todavía no esté incluido en mi colección. Agrego nuevos niveles todos los días, así que vuelve pronto y prueba de nuevo. ¡Gracias por tu paciencia y por ayudarme a hacer crecer esta colección!',
+  collectionBefore:'Tableros antes de la última actualización', collectionAdded:'Tableros agregados en la última actualización', collectionTotal:'Total de tableros', collectionUpdated:'Última actualización', collectionLoading:'Cargando información de la colección…', collectionUnavailable:'No fue posible consultar la fecha de actualización.', collectionNote:'¿No aparece tu tablero? Es posible que todavía no esté incluido en mi colección. Agrego nuevos niveles todos los días, así que vuelve pronto y prueba de nuevo. ¡Gracias por tu paciencia y por ayudarme a hacer crecer esta colección!',
  contactText:'¿Quieres escribirme? Puedes contactarme en <a href="mailto:gamelevelsolutions@gmail.com">gamelevelsolutions@gmail.com</a>.',
  kofiText:'¿Te ayudó a encontrar tu tablero? ¡Invítame un cafecito! ☕ Tu apoyo me ayuda a subir nuevos niveles todos los días, agregar más tableros, mejorar el buscador y mantenerlo gratuito para todos. ¡Cada café cuenta, muchas gracias!',
  kofiButton:'☕ Invítame un café',
@@ -99,7 +109,7 @@ en:{
  aboutText:'It all started in October 2026, when I created my own YouTube channel, <strong>Game Level Solutions</strong>, to share Catdom Color Hole walkthroughs. I was already quite far into the game, and my collection began at level 1282 because the walkthroughs I found did not always match the boards in my own levels. I thought an update might have changed the level numbering or sequence. So I started recording and sharing my own solutions as I progressed through the game.  Toward the end of October 2026, when I was around level 1801, I came across boards I remembered playing before, but they were now appearing under different level numbers. This made me wonder whether updates might not only add new levels, but also bring back or rearrange previous boards with different numbering.  Then I had an idea: what if, instead of searching for a walkthrough by level number, players could find it by the board\'s visual layout? That\'s how <strong>Catdom Board Finder</strong> was born: a tool created by a player, for Catdom Color Hole fans, to find walkthroughs by visually matching the board instead of relying only on its level number.',
  kofiTitle:'Did Catdom Board Finder help you?',
   kofiText:'I’m just getting started, and every coffee helps me add more boards, improve the search tool, and keep it free.',
- collectionNote:'Can’t find your board? It may not be in my collection yet. I add new levels every day, so check back soon and try again. Thanks for your patience and for helping me grow this collection!',
+ collectionBefore:'Boards before the latest update', collectionAdded:'Boards added in the latest update', collectionTotal:'Total boards', collectionUpdated:'Last updated', collectionLoading:'Loading collection information…', collectionUnavailable:'Could not retrieve the update date.', collectionNote:'Can’t find your board? It may not be in my collection yet. I add new levels every day, so check back soon and try again. Thanks for your patience and for helping me grow this collection!',
  contactText:'Want to get in touch? Email me at <a href="mailto:gamelevelsolutions@gmail.com">gamelevelsolutions@gmail.com</a>.',
  kofiText:'Did it help you find your board? Buy me a coffee! ☕ Your support helps me add new levels every day, grow the board collection, improve the finder, and keep it free for everyone. Every coffee makes a difference. Thank you!',
 
@@ -115,6 +125,51 @@ en:{
  loadError:'We could not load the board collection. Please reload the page.'
 }};
 const tr=k=>T[currentLang][k]||T.en[k]||k;
+const collectionStats=$('collection-stats');
+let collectionMeta=null, collectionDate=null;
+function formatCollectionDate(value){
+ if(!value)return tr('collectionUnavailable');
+ const date=new Date(value);
+ if(Number.isNaN(date.getTime()))return tr('collectionUnavailable');
+ return new Intl.DateTimeFormat(currentLang==='es'?'es-MX':'en-US',{
+  dateStyle:'long',timeStyle:'short',timeZone:'America/Mexico_City'
+ }).format(date);
+}
+function renderCollectionStats(){
+ if(!collectionStats||!collectionMeta)return;
+ const total=boards.length;
+ const previous=Number(collectionMeta.previousCount)||Math.max(0,total-(Number(collectionMeta.addedCount)||0));
+ const added=Number(collectionMeta.addedCount)||Math.max(0,total-previous);
+ collectionStats.innerHTML=`
+  <div class="collection-stats">
+   <div class="collection-stat"><span class="label">${tr('collectionBefore')}</span><span class="value">${previous}</span></div>
+   <div class="collection-stat"><span class="label">${tr('collectionAdded')}</span><span class="value">+${added}</span></div>
+   <div class="collection-stat total"><span class="label">${tr('collectionTotal')}</span><span class="value">${total}</span></div>
+  </div>
+  <p class="collection-updated">${tr('collectionUpdated')}: ${formatCollectionDate(collectionDate)}</p>`;
+}
+async function loadCollectionMeta(){
+ try{
+  const metaResponse=await fetch('./update-info.json',{cache:'no-store'});
+  if(!metaResponse.ok)throw new Error('metadata');
+  collectionMeta=await metaResponse.json();
+  // GitHub's timestamp for the latest commit that changed update-info.json.
+  const commitResponse=await fetch('https://api.github.com/repos/gamelevelsolutions/catdom-board-finder/commits?path=update-info.json&per_page=1',{headers:{'Accept':'application/vnd.github+json'},cache:'no-store'});
+  if(!commitResponse.ok)throw new Error('github timestamp');
+  const commits=await commitResponse.json();
+  collectionDate=commits?.[0]?.commit?.committer?.date||commits?.[0]?.commit?.author?.date||null;
+  renderCollectionStats();
+ }catch(error){
+  console.warn('Collection update metadata unavailable:',error);
+  if(collectionMeta){
+   collectionDate=collectionMeta.fallbackDate||null;
+   renderCollectionStats();
+  }else if(collectionStats){
+   collectionStats.textContent=tr('collectionUnavailable');
+  }
+ }
+}
+
 function setLanguage(lang){
  currentLang=lang;document.documentElement.lang=lang;
  document.querySelectorAll('[data-i18n]').forEach(el=>el.innerHTML=tr(el.dataset.i18n));
@@ -123,6 +178,7 @@ function setLanguage(lang){
  $('lang-es').setAttribute('aria-pressed',lang==='es');$('lang-en').setAttribute('aria-pressed',lang==='en');
  if(status.dataset.key) status.innerHTML=tr(status.dataset.key);
  if(results.style.display==='block') translateResults();
+ renderCollectionStats();
 }
 $('lang-es').addEventListener('click',()=>setLanguage('es'));
 $('lang-en').addEventListener('click',()=>setLanguage('en'));
@@ -278,7 +334,7 @@ fetch('./data.json').then(r=>{if(!r.ok)throw new Error('data');return r.json()})
  boards=data.map(b=>({...b})); 
  // Preload and normalize every catalog reference once.
  return Promise.all(boards.map(async b=>{const im=await loadImage(b.image);b.pixels=referencePixels(im);return b}));
-}).then(()=>{ /* catalog ready */ }).catch(err=>{console.error(err);showStatus('loadError')});
+}).then(()=>{ /* catalog ready */ loadCollectionMeta(); }).catch(err=>{console.error(err);showStatus('loadError')});
 setLanguage(currentLang);
 
 // Track outbound links without collecting personal information.
