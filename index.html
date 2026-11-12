@@ -119,10 +119,10 @@ es:{
  footer:'Hecho para jugadores de Catdom Color Hole · Game Level Solutions',
  invalid:'Ese archivo no parece ser una imagen. Elige una captura PNG, JPG o WEBP.',
  analyzing:'Analizando…',comparing:'Buscando el tablero dentro de tu captura y comparándolo con la colección…',
- possible:'¡Encontramos un posible tablero!',none:'No encontramos una coincidencia segura',
- noneText:'Estos son los tableros visualmente más parecidos. Ninguno alcanzó el umbral de coincidencia; puede que tu tablero aún no esté registrado.',
- close:'También hay otra coincidencia cercana. Revisa que el primer resultado sea tu tablero.',
- level:'Nivel',estimated:'Similitud estimada: ',match:'Coincidencia estimada: ',watch:'▶ Ver walkthrough',
+ possible:'Hay una coincidencia visual prometedora',none:'No encontramos una coincidencia confiable',
+ noneText:'Estos son los tres tableros visualmente más cercanos, no coincidencias confirmadas. Revisa las imágenes: tu tablero puede no estar incluido todavía.',
+ close:'La diferencia entre los primeros resultados es pequeña. Comprueba cuidadosamente el diseño antes de abrir un walkthrough.',
+ level:'Nivel',estimated:'Candidato por revisar · ',match:'Coincidencia prometedora · ',watch:'▶ Ver walkthrough',
  error:'No pudimos analizar esa imagen. Intenta con una captura PNG o JPG más clara.',
  loadError:'No pudimos cargar la base de tableros. Recarga la página más tarde.'
 },
@@ -146,10 +146,10 @@ en:{
  footer:'Made for Catdom Color Hole players · Game Level Solutions',
  invalid:'This file does not appear to be an image. Choose a PNG, JPG, or WEBP screenshot.',
  analyzing:'Analyzing…',comparing:'Locating the board in your screenshot and comparing it with the collection…',
- possible:'We found a possible board!',none:'No confident match found',
- noneText:'These are the visually closest boards. None reached the matching threshold; your board may not be in our collection yet.',
- close:'There is another close match. Check that the first result is your board.',
- level:'Level',estimated:'Estimated similarity: ',match:'Estimated match: ',watch:'▶ View walkthrough',
+ possible:'A promising visual match was found',none:'No reliable match found',
+ noneText:'These are the three visually closest boards, not confirmed matches. Check the images carefully; your board may not be in the collection yet.',
+ close:'The top results are close to one another. Check the board layout carefully before opening a walkthrough.',
+ level:'Level',estimated:'Candidate to review · ',match:'Promising visual match · ',watch:'▶ View walkthrough',
  error:'We could not analyze that image. Try a clearer PNG or JPG screenshot.',
  loadError:'We could not load the board collection. Please reload the page.'
 }};
@@ -272,7 +272,7 @@ function descriptorDistance(a,b){
  edge/=96*120;
  for(let i=0;i<a.blocks.length;i++)block+=Math.abs(a.blocks[i]-b.blocks[i]);
  block/=a.blocks.length;
- // Blend color layout with boundaries. Scores remain on an approximately 0–255 scale.
+ // Blend color layout with boundaries. This is a raw distance (lower is closer), not a probability.
  return pixel*.55+edge*.30+block*.15;
 }
 // Search multiple likely board locations and sizes. This accepts full phone/social screenshots
@@ -322,7 +322,7 @@ function makeMatch(b,percent,uncertain=false){
 function translateCard(card){
  const level=card.querySelector('.level'),score=card.querySelector('.score'),link=card.querySelector('.watch');
  if(level)level.textContent=tr('level')+' '+level.dataset.number;
- if(score)score.textContent=(score.dataset.uncertain==='1'?tr('estimated'):tr('match'))+score.dataset.percent+'%';
+ if(score)score.textContent=score.dataset.uncertain==='1'?tr('estimated'):tr('match');
  if(link)link.textContent=tr('watch');
 }
 function recordBoardFeedback(answer){
@@ -348,18 +348,22 @@ $('find').addEventListener('click',async()=>{
  try{
   const userImg=await loadImage(URL.createObjectURL(selectedFile));
   const scored=bestMatches(userImg,boards);
-  const best=scored[0],confidence=Math.max(0,Math.min(99,Math.round(100-best.score)));
+  const best=scored[0];
+  const runnerUp=scored[1];
   $('matches').innerHTML='';
-  // Keep conservative rejection threshold; do not lower it to force a match.
-  if(best.score<42){
-   $('resultTitle').dataset.state='possible';$('matches').appendChild(makeMatch(best,confidence));
-   if(scored[1]&&scored[1].score<48){
-    const alt=document.createElement('p');alt.className='score result-close';$('matches').appendChild(alt);alt.textContent=tr('close');
-   }
+  // A raw pixel-distance score is NOT a probability. Require a substantially
+  // better distance and a clear lead over the runner-up before calling it promising.
+  // Until we have a larger labelled test set, ambiguous results remain candidates only.
+  const hasClearLead=!!runnerUp&&(runnerUp.score-best.score)>=8;
+  const promising=best.score<25&&hasClearLead;
+  if(promising){
+   $('resultTitle').dataset.state='possible';
+   $('matches').appendChild(makeMatch(best,'',false));
+   const alt=document.createElement('p');alt.className='score result-close';alt.textContent=tr('close');$('matches').appendChild(alt);
   }else{
    $('resultTitle').dataset.state='none';
    const p=document.createElement('p');p.className='result-explain';p.style.color='var(--muted)';p.textContent=tr('noneText');$('matches').appendChild(p);
-   scored.slice(0,3).forEach(b=>$('matches').appendChild(makeMatch(b,Math.max(0,Math.round(100-b.score)),true)));
+   scored.slice(0,3).forEach(b=>$('matches').appendChild(makeMatch(b,'',true)));
   }
   translateResults();$('feedback').hidden=false;$('feedbackThanks').hidden=true;$('feedbackYes').disabled=false;$('feedbackNo').disabled=false;results.style.display='block';status.style.display='none';results.scrollIntoView({behavior:'smooth',block:'start'});
  }catch(err){console.error(err);showStatus('error')}
