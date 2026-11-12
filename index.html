@@ -288,7 +288,16 @@ function candidateCrops(img){
    if(cr>=.62&&cr<=1.08)candidates.push({x:x*W,y:y*H,w:w*W,h:h*H});
   }
  }
- // A few broad candidates handle screenshots with unusual UI proportions.
+ // Broad crops for social-video screenshots (TikTok/Reels/Shorts).
+ // These often show the full-width game board with UI overlays around it.
+ // Include near-full-width crops; the board may extend almost edge-to-edge.
+ for(const x of [0,.01,.02,.04])for(const y of [.18,.20,.22,.24])for(const w of [.92,.96,.98,1.0])for(const h of [.48,.50,.52,.54,.56,.58]){
+  if(x+w<=1&&y+h<=.90){
+   const cr=(w*W)/(h*H);
+   if(cr>=.62&&cr<=1.08)candidates.push({x:x*W,y:y*H,w:w*W,h:h*H});
+  }
+ }
+ // Retain broad candidates for other unusual phone screenshot layouts.
  for(const x of [.02,.06,.10])for(const y of [.14,.19,.24])for(const w of [.76,.82,.88])for(const h of [.42,.48,.54]){
   if(x+w<=1&&y+h<=.92)candidates.push({x:x*W,y:y*H,w:w*W,h:h*H});
  }
