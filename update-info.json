@@ -1,5 +1,6 @@
 {
-  "previousCount": 102,
-  "addedCount": 20,
-  "totalCount": 122
+  "range": "1417-1436",
+  "added": 20,
+  "total_boards": 142,
+  "duplicate_audit": "Visual review of the new boards against catalog and each other: no duplicate layouts identified."
 }
