@@ -1,6 +1,7 @@
 {
   "range": "1437-1450",
-  "added": 14,
+  "previousCount": 142,
+  "addedCount": 14,
   "total_boards": 156,
   "duplicate_audit": "The 14 new boards were compared against the full 142-board previous catalog and against each other. No duplicate boards were identified."
 }
